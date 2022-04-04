@@ -23,3 +23,27 @@ def get_all_cupcakes():
     serialize = [c.serialize() for c in cupcakes]
 
     return jsonify(cupcakes=serialize)
+
+@app.get("/api/cupcakes/<int:cupcake_id>")
+def get_cupcake(cupcake_id):
+    """ Get data about a single cupcake """
+
+    cupcake = Cupcake.query.get_or_404(cupcake_id)
+    serialize = cupcake.serialize()
+
+    return jsonify(cupcake=serialize)
+
+@app.post("/api/cupcakes")
+def create_cupcake():
+    """ Create a cupcake with flavor,size,rating,image data """
+
+    flavor = request.json["flavor"]
+    size = request.json["size"]
+    rating = request.json["rating"]
+    image = request.json["image"]
+
+    new_cupcake = Cupcake(flavor=flavor,size=size,rating=rating,image=image)
+
+    serialize = new_cupcake.serialize()
+
+    return jsonify(cupcake=serialize)
