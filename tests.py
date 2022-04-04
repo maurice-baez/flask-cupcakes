@@ -49,6 +49,8 @@ class CupcakeViewsTestCase(TestCase):
         db.session.rollback()
 
     def test_list_cupcakes(self):
+        """ test getting all the cupcake """
+
         with app.test_client() as client:
             resp = client.get("/api/cupcakes")
 
@@ -69,6 +71,8 @@ class CupcakeViewsTestCase(TestCase):
             })
 
     def test_get_cupcake(self):
+        """ test getting a cupcake """
+
         with app.test_client() as client:
             url = f"/api/cupcakes/{self.cupcake.id}"
             resp = client.get(url)
@@ -86,6 +90,8 @@ class CupcakeViewsTestCase(TestCase):
             })
 
     def test_create_cupcake(self):
+        """ test creating a cupcake """
+
         with app.test_client() as client:
             url = "/api/cupcakes"
             resp = client.post(url, json=CUPCAKE_DATA_2)
@@ -108,3 +114,36 @@ class CupcakeViewsTestCase(TestCase):
             })
 
             self.assertEqual(Cupcake.query.count(), 2)
+
+    def test_patch_cupcake(self):
+        """ test updating a cupcake """
+
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            resp = client.patch(url, json={"flavor": "test_flavor", "rating": 1})
+            self.assertEqual(resp.status_code, 200)
+
+            
+            self.assertEqual(resp.json, {
+                "cupcake": {
+                    "id": self.cupcake.id,
+                    "flavor": "test_flavor",
+                    "size": "TestSize",
+                    "rating": 1,
+                    "image": "http://test.com/cupcake.jpg"
+                }
+            })
+
+    def test_delete_cupcake(self):
+        """ test deleting a cupcake """
+
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            resp = client.delete(url)
+            self.assertEqual(resp.status_code, 200)
+
+            self.assertEqual(resp.json, {
+                "deleted": self.cupcake.id
+            })
+            self.assertEqual(Cupcake.query.count(), 0)
+
