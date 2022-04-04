@@ -1,6 +1,6 @@
 """Flask app for Cupcakes"""
 
-from flask import Flask, redirect, render_template, flash, jsonify
+from flask import Flask, request, jsonify
 
 from models import db, connect_db, Cupcake
 
@@ -44,6 +44,9 @@ def create_cupcake():
 
     new_cupcake = Cupcake(flavor=flavor,size=size,rating=rating,image=image)
 
+    db.session.add(new_cupcake)
+    db.session.commit()
+
     serialize = new_cupcake.serialize()
 
-    return jsonify(cupcake=serialize)
+    return (jsonify(cupcake=serialize), 201)
