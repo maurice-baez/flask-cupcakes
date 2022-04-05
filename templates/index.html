@@ -18,25 +18,25 @@
     <ul id="cupcakes-list">
     </ul>
 
-    <form action="/api/cupcakes" method="POST">
+    <form id="cupcake-form" method="POST">
 
-      <label for="flavor">Flavor:
-        <input type="text" class="form-control">
+      <label for="flavor" >Flavor:
+        <input type="text" id="flavor" class="form-control">
       </label>
 
-      <label for="rating">Rating:
-        <input type="text" class="form-control">
+      <label for="rating" >Rating:
+        <input type="text" id="rating" class="form-control">
       </label>
 
-      <label for="size">Size:
-        <input type="text" class="form-control">
+      <label for="size" >Size:
+        <input type="text" id="size" class="form-control">
       </label>
 
-      <label for="image-url">Image URL:
-        <input type="url" class="form-control">
+      <label for="image-url" >Image URL:
+        <input type="url" id="image-url" class="form-control">
       </label>
 
-      <button class="btn btn-primary">Add Cupcake</button>
+      <button type="submit" class="btn btn-primary" id="new-cupcake-btn">Add Cupcake</button>
     </form>
 
 
@@ -48,6 +48,7 @@
 
   <script src="https://unpkg.com/jquery"></script>
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
-  <script src="/static/app.js"></script>
+  <script src="/static/api-calls.js"></script>
+  <script src="/static/ui.js"></script>
 </body>
 </html>
